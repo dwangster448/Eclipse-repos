@@ -1,0 +1,37 @@
+import java.io.IOException;
+
+// Constructor comment: Every implementing class should have a constructor with these parameters.
+  /*
+  public BuildingData(String filePath) {
+        // Constructor goes here.
+        // this.filePath = filePath;
+  }
+  */
+/**
+ * The interface for the backend of UW Pathfinder, responsible for finding all data
+ * based on getter commands. Send data to frontend instance.
+ */
+public interface BackendInterface {
+  /**
+   * Reads data from the dot file located at a specified 'filePath' and imports the data into
+   * database as an object.
+   * @param filePath  The path to the dot file to be read
+   * @throws IOException If an I/O error occurs while reading the dot file.
+   */
+  void readData(String filePath) throws IOException;
+
+  /**
+   * Gets the shortest total time from the initial building to the ending building
+   * @param start initial building
+   * @param target ending building
+   * @return
+   */
+  double getShortestPathCost(String start, String target);
+
+  /**
+   * Generates a string of the number of buildings, number of edges, and total walking time
+   * for all edges in the graph
+   */
+  String getStatistics();
+
+}

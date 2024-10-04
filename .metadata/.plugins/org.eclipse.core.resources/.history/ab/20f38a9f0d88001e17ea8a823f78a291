@@ -1,0 +1,51 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class Backend implements BackendInterface {
+
+  private DijkstraGraph<String, Integer> graph;
+  
+  public Backend() {
+    graph = new DijkstraGraph<>(new PlaceholderMap<>());
+  }
+  
+  @Override
+  public boolean readData(String filepath) throws IOException {
+    String line;
+    // catch any expected exceptions during the reading of the file in backend
+    try (BufferedReader reader = new BufferedReader(new FileReader(filePath));) {
+      reader.readLine();
+      while ((line = reader.readLine()) != null) {
+        // Split the line into columns using a comma as the delimiter
+        String[] data = line.split(",");
+        //assign all car properties into variables
+        int price = Integer.parseInt(data[0].trim());
+        String brand = data[1].trim();
+        String model = data[2].trim();
+        int year = Integer.parseInt(data[3].trim());
+        double mileage = Double.parseDouble(data[5].trim());
+        //create car object
+        Car car = new Car(brand, model, year, price, mileage);
+        //add car object into the current Backend instance's Red-Black Tree
+        carsDatabase.insertSingleKey(car);
+      }
+      reader.close();
+    } catch (IOException e) {
+      throw new IOException("Invalid file path");
+    }
+  }
+
+  @Override
+  public ShortestPath findShortestPath(String start, String dest) {
+    map = new ShortestPath 
+    return null;
+  }
+
+  @Override
+  public String getGraphStats() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  
+}

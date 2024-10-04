@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;toReturn&apos; in &apos;PasswordStorage.getBestPassword()&apos; to &apos;toReturnLeft&apos;&#x0A;- Original project: &apos;P06 Password Cracking&apos;&#x0A;- Original element: &apos;PasswordStorage.getBestPassword().toReturn&apos;&#x0A;- Renamed element: &apos;toReturn&apos;&#x0A;- Update references to refactored element" description="Rename local variable &apos;toReturn&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;{PasswordStorage.java[PasswordStorage~getBestPassword@toReturn!6697!6730!6710!6717!QPasswordNode;!0!false" name="toReturnLeft" references="true" stamp="1690768275764" version="1.0"/>
+</session>

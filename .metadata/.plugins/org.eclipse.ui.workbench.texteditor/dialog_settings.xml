@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item key="selection" value=""/>
+		<item key="wrap" value="false"/>
+		<item key="casesensitive" value="false"/>
+		<item key="wholeword" value="false"/>
+		<item key="incremental" value="false"/>
+		<item key="isRegEx" value="false"/>
+		<list key="findhistory">
+			<item value="poll"/>
+			<item value="src/campus.dot"/>
+			<item value="HashtableMap"/>
+			<item value="hash"/>
+			<item value="hashmap"/>
+			<item value="BackendPlaceholder"/>
+			<item value="hold"/>
+			<item value="coll"/>
+			<item value="collision"/>
+			<item value="collide"/>
+			<item value="testAlternativeShortestPath"/>
+			<item value="testAlternativeShortestPath()"/>
+			<item value="equal"/>
+			<item value="nodes"/>
+			<item value="visit"/>
+		</list>
+		<list key="replacehistory">
+			<item value="campus.dot"/>
+			<item value="PlaceholderMap"/>
+			<item value=""/>
+			<item value="Backend"/>
+			<item value="subtree"/>
+			<item value="currentIterator"/>
+			<item value="frames"/>
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item key="DIALOG_X_ORIGIN" value="643"/>
+		<item key="DIALOG_Y_ORIGIN" value="271"/>
+		<item key="DIALOG_WIDTH" value="336"/>
+		<item key="DIALOG_HEIGHT" value="402"/>
+		<item key="DIALOG_FONT_NAME" value="1|.AppleSystemUIFont|11.0|0|COCOA|1|.AppleSystemUIFont"/>
+	</section>
+</section>

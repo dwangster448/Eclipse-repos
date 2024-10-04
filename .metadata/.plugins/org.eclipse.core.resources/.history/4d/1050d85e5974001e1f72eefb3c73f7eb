@@ -1,0 +1,111 @@
+import java.util.Scanner;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
+
+public class FrontendDeveloperTests {
+
+  /**
+   * This tests whether exit is properly implemented
+   */
+  @Test
+  public void testExit() {
+    TextUITester uiTester = new TextUITester("q\n");
+    Frontend frontend = new Frontend(new Backend(), new Scanner(System.in));
+
+    frontend.start();
+    String systemOutput = uiTester.checkOutput();
+    Assertions.assertTrue(systemOutput.contains("=== Menu ===\n"
+        + "Choose an option:\n"
+        + "1. Get data from a file\n"
+        + "2. Get the car with the lowest mileage\n"
+        + "3. Get cars with mileage above a threshold\n"
+        + "Q. Quit\n"
+        + "Enter your choice: q\n"
+        + "Goodbye!"));
+  }
+
+  /**
+   * Tests whether the command loop is correctly implemented
+   */
+  @Test
+  public void testStart() {
+    TextUITester uiTester = new TextUITester("f\nQ\n");
+    Frontend frontend = new Frontend(new Backend(), new Scanner(System.in));
+    frontend.start();
+    String systemOutput = uiTester.checkOutput();
+    Assertions.assertTrue(systemOutput.contains("=== Menu ===\n"
+        + "Choose an option:\n"
+        + "1. Get data from a file\n"
+        + "2. Get the car with the lowest mileage\n"
+        + "3. Get cars with mileage above a threshold\n"
+        + "Q. Quit\n"
+        + "Enter your choice: q\n"
+        + "Goodbye!"));
+  }
+
+
+  /**
+   * Tests for the correct implementation of calling loadData from the backend
+   */
+  @Test
+  public void testGetData() {
+    TextUITester uiTester = new TextUITester("1\nsrc/cars.csv\nQ\n");
+    Frontend frontend = new Frontend(new Backend(), new Scanner(System.in));
+    frontend.start();
+    String systemOutput = uiTester.checkOutput();
+    Assertions.assertTrue(systemOutput.contains("Successfully loaded file"));
+  }
+
+
+
+  /**
+   * Tests whether the getCarsWithMinMileage method is correctly implemented
+   */
+  @Test
+  public void testLowestMile() {
+    TextUITester uiTester = new TextUITester("2\nQ\n");
+    Frontend frontend = new Frontend(new Backend(), new Scanner(System.in));
+    frontend.start();
+    String systemOutput = uiTester.checkOutput();
+    Assertions.assertTrue(systemOutput.contains("door") && systemOutput.contains("chassis"));
+  }
+
+  /**
+   * Tests whether the getCarsWithMileageAbove method is correctly implemented
+   */
+  @Test
+  public void testThesholdMile() {
+    TextUITester uiTester = new TextUITester("3\n8000\nQ\n");
+    Frontend frontend = new Frontend(new Backend(), new Scanner(System.in));
+    frontend.start();
+    String systemOutput = uiTester.checkOutput();
+    Assertions.assertTrue(systemOutput.contains("Camero") && systemOutput.contains("Bronco"));
+  }
+
+  /**
+   * Tests whether the backend returns the correct list of minimum mileage cars.
+   */
+  @Test
+  public void IntegrationTestGetLowestMileFromBackend() {
+    TextUITester uiTester = new TextUITester("1\nsrc/cars.csv\n2\nq\n");
+    Frontend frontend = new Frontend(new Backend(), new Scanner(System.in));
+    frontend.start();
+    String systemOutput = uiTester.checkOutput();
+    Assertions.assertTrue(systemOutput.contains("[door, chassis, truck, door, door, door]"));
+  }
+
+  /**
+   * Ensure that the frontend can get cars with mileage above a threshold from the backend.
+   */
+  @Test
+  public void IntegrationTestGetThresholdMile() {
+    TextUITester uiTester = new TextUITester("1\nsrc/cars.csv\n3\n1000.00\nQ\n");
+    Frontend frontend = new Frontend(new Backend(), new Scanner(System.in));
+    frontend.start();
+    String systemOutput = uiTester.checkOutput();
+    Assertions.assertTrue(systemOutput.contains("[caravan, fusion, fusion, explorer, mustang, door]"));
+  }
+
+
+
+}

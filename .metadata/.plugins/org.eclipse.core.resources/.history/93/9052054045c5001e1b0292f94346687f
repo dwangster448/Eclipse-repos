@@ -1,0 +1,67 @@
+import java.util.*;
+
+
+public class hw2 {
+
+  public class Node {
+    String data;
+    String[] neighbors;
+
+    public Node(String data) {
+      this.data = data;
+    }
+
+
+  }
+
+  static int input = 0;
+  static Map<Node, Integer> graph = new LinkedHashMap<>();
+
+  static Queue queue
+
+  public static <T> void readData(int amount, Scanner scanner) {
+    String node;
+    for (int i = 0; i < amount; i++) {
+      node = scanner.next();
+      Node placeholder = new Node(node);
+      graph.put(placeholder, i);
+      if (scanner.nextLine().length() > 0) {
+        String line;
+        line = scanner.nextLine();
+        placeholder.neighbors = line.split("//s");
+          for (int j=0;j<placeholder.neighbors.length; j++) {
+            
+          }
+      }
+    }
+
+    graph.put(node, neighbors);
+
+  }
+
+  public static void main(String[] args) {
+    Scanner scanner = new Scanner(System.in);
+    input = scanner.nextInt();
+
+    if (scanner.hasNextInt()) {
+      int nodes = input;
+      input = scanner.nextInt();
+      for (int i = 0; i < input; i++) {
+        readData(input, scanner);
+      }
+    }
+    for (int j = 0; j < input; j++) {
+      String line = scanner.nextLine();
+    }
+
+    scanner.close();
+
+    String output = "";
+
+    for (String node : graph.keySet()) {
+      output += (node + " ");
+    }
+    System.out.println(output);
+  }
+
+}

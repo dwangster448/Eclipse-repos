@@ -1,0 +1,38 @@
+import java.util.LinkedList;
+import java.util.List;
+
+public class ShortestPath implements ShortestPathInterface{
+
+  public DijkstraGraph<String, Double> graph;
+  
+  public String start;
+  
+  public String dest;
+  
+  /*
+   * Construct a new instance of this class that implements Dijkstra's algorithm
+   */
+  public ShortestPath(String start, String dest, DijkstraGraph<String, Double> graph) {
+    this.graph = graph;
+    this.start = start;
+    this.dest = dest;
+  }
+  
+  @Override
+  public List<String> getPath() {
+    return graph.shortestPathData(start, dest);
+  }
+
+  @Override
+  public List<Double> getWalkTimes() {
+    List<Double> time = new LinkedList<>();
+    DijkstraGraph<String, Double>.SearchNode node = graph.computeShortestPath(start, dest);
+    return null;
+  }
+
+  @Override
+  public double getTotalTime() {
+    return graph.shortestPathCost(start, dest);
+  }
+
+}

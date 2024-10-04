@@ -1,0 +1,29 @@
+import java.util.Iterator;
+
+public class IterableMultiKeyRBT <T extends Comparable<T>> extends RedBlackTree<T> implements IterableMultiKeySortedCollectionInterface<T> {
+
+  @Override
+  public boolean insertSingleKey(Comparable key) {
+    // TODO Auto-generated method stub
+    return false;
+  }
+
+  @Override
+  public int numKeys() {
+    // TODO Auto-generated method stub
+    return 0;
+  }
+
+  @Override
+  public Iterator iterator() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public void setIterationStartPoint(Comparable startPoint) {
+    // TODO Auto-generated method stub
+    
+  }
+  
+}

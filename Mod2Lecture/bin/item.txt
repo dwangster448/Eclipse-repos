@@ -1,0 +1,7 @@
+apple | 1.99
+bread | 1.35
+trash bags | 3.21
+12-pk soda | 7.99
+cheese | one
+corn | 0.75
+milk | 2.45

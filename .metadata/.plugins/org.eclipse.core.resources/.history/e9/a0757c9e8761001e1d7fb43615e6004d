@@ -1,0 +1,128 @@
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+public class RedBlackTree<T extends Comparable<T>> extends BinarySearchTree<T> {
+
+  public static Object BLACK;
+
+  protected static class RBTNode<T /*extends Node<T>*/> {
+    public int blackHeight = 0;
+    private RedBlackTree.RBTNode<T> up;
+    private RedBlackTree.RBTNode<T>[] down;
+
+    public RBTNode(T data) {
+      super();
+    }
+
+    public RBTNode<T> getUp() {
+      return (RBTNode<T>) this.up;
+    }
+
+    public RBTNode<T> getDownLeft() {
+      return (RBTNode<T>) this.down[0];
+    }
+
+    public RBTNode<T> getDownRight() {
+      return (RBTNode<T>) this.down[1];
+    }
+  }
+
+  // Resolves RBT red violations
+  protected void enforceRBTreePropertiesAfterInsert(RBTNode<T> newNode) {
+    if (newNode == null) {
+      return;
+    }
+
+    RedBlackTree.RBTNode<T> parent = newNode.up;
+    if (parent == null) {
+
+    }
+  }
+
+  
+
+  // Helper method to perform a left rotation
+  private void rotateLeft(Node<T> node) {
+    // Left rotation logic here
+  }
+
+  // Helper method to perform a right rotation
+  private void rotateRight(Node<T> node) {
+    // Right rotation logic here
+  }
+
+
+  @Override
+  public boolean insert(T data) throws NullPointerException {
+    if (data == null)
+      throw new NullPointerException("Cannot insert data value null into the tree.");
+    RBTNode<T> newNode = new RBTNode<T>(data); // Create a new red node
+    insertHelper(newNode); // Insert the new node using the helper method
+    enforceRBTreePropertiesAfterInsert(newNode); // Enforce Red-Black Tree properties
+
+    // After enforcing properties, set the root node to black
+    if (newNode.up == null) {
+      //newNode.setColor("Black");
+    }
+    return true;
+  }
+  
+  /**
+   * This is a tester method to test the root is black
+   * 
+   */
+  @Test
+  public void testCase1() {
+      RedBlackTree<Integer> tree = new RedBlackTree<>();
+      tree.insert(15);
+      tree.insert(10);
+      tree.insert(12);
+      
+      Node<Integer> ten = tree.root;
+
+      // Check that the root node is 10
+      if (!tree.root.blackHeight == 1) {
+        Assertions.fail("testCase1 FAILED-------");
+      }
+  }
+  
+  /**
+   * This is a tester method to test that no consecutive red nodes exist
+   * 
+   */
+  @Test
+  public void testCase2() {
+      RedBlackTree<Integer> tree = new RedBlackTree<>();
+      tree.insert(10);
+      tree.insert(5);
+      tree.insert(15);
+      tree.insert(3);
+
+      Node<Integer> five = tree.root;
+      // Check that no consecutive red nodes exist
+      if (!tree.root.equals(five)) {
+        System.out.println("Consecutive red nodes exist");
+        Assertions.fail("testCase2 FAILED-------");
+      }
+  }
+  
+  /**
+   * This is a tester method to test that the tree structure is balanced
+   * 
+   */
+  @Test
+  public void testCase3() {
+      RedBlackTree<Integer> tree = new RedBlackTree<>();
+      tree.insert(10);
+      tree.insert(5);
+      tree.insert(15);
+      tree.insert(12);
+      
+      Node<Integer> leafNode = (tree.root.down[0]);
+      // Check that the tree structure is balanced
+      if (tree.root.down[0].equals(leafNode)) {
+        Assertions.fail("testCase3 FAILED--------");
+      }
+  }
+
+}

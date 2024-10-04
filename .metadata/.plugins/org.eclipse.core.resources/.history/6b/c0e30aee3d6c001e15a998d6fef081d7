@@ -1,0 +1,116 @@
+// --== CS400 Fall 2023 File Header Information ==--
+// Name: Daniel Wang
+// Email: dwang448@wisc.edu
+// Group: C29
+// TA: Anvay Grover
+// Lecturer: Florian Heimerl
+
+import java.util.Iterator;
+import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import java.util.Stack;
+
+public class IterableMultiKeyRBT <T extends Comparable<T>> extends RedBlackTree<KeyListInterface<T>> implements IterableMultiKeySortedCollectionInterface<T> {
+
+  public KeyList<T> startPoint;
+  
+  public int numKey;
+  /**
+   * Inserts value into tree that can store multiple objects per key by keeping
+   * lists of objects in each node of the tree.
+   * @param key object to insert
+   * @return true if a new node was inserted, false if the key was added into an existing node
+   */
+  @Override
+  public boolean insertSingleKey(T key) {
+    KeyList<T> newKey = new KeyList<T>(key);
+    if (startPoint == null) {
+      startPoint = newKey;
+    }
+    else if (startPoint.containsKey(key)) {
+      return false;
+    }
+    else {
+      startPoint.addKey(key);
+    }
+    return true;
+  }
+
+  /**
+   * @return the number of values in the tree.
+   */
+  @Override
+  public int numKeys() {
+    return this.numKey;
+  }
+
+  /**
+   * Returns an iterator that does an in-order iteration over the tree.
+   */
+  @Override
+  public Iterator<T> iterator() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  /**
+   * Sets the starting point for iterations. Future iterations will start at the
+   * starting point or the key closest to it in the tree. This setting is remembered
+   * until it is reset. Passing in null disables the starting point.
+   * @param startPoint the start point to set for iterations
+   */
+  @SuppressWarnings("unchecked")
+  @Override
+  public void setIterationStartPoint(Comparable<T> startPoint) {
+    this.startPoint = (KeyList<T>) startPoint;
+  }
+  
+  @Override
+  public void clear() {
+    super.clear();
+    numKey = 0;
+  }
+  
+//  protected Node<T> getStartStack() {
+////    if (this.startPoint == null) {
+////      
+////    }
+////    return Node<T>
+//  }
+  
+  public void testEmptyTree() {
+    IterableMultiKeyRBT<Integer> tree = new IterableMultiKeyRBT<>();
+    Assertions.assertTrue(tree.iterator().hasNext() == false);
+  }
+  
+  @Test
+  public void testInitialTraversal() {
+    IterableMultiKeyRBT<Integer> tree = new IterableMultiKeyRBT<>();
+    tree.insertSingleKey(10);
+    Iterator<Integer> iter = tree.iterator();
+    Assertions.assertEquals(10, iter.next());
+    Assertions.assertFalse(iter.hasNext());
+    Assertions.assertEquals(10, tree.numKeys());
+    Assertions.assertEquals(10, tree.size());
+  }
+  
+  /*
+   * Checks if an iterator with a start point iterates over all keys
+   * equal to and larger than the start point.
+   */
+   @Test
+   public void testIteratorOverStartPoint() {
+           IterableMultiKeyRBT<Integer> tree = new IterableMultiKeyRBT<>();
+           tree.insertSingleKey(5);
+           tree.insertSingleKey(15);
+           tree.insertSingleKey(20);
+
+           tree.setIterationStartPoint(20);
+           Assertions.assertEquals(20, tree.iterator().next());
+           tree.setIterationStartPoint(10);
+           Assertions.assertEquals(15, tree.iterator().next());
+           tree.setIterationStartPoint(null);
+           Assertions.assertEquals(5, tree.iterator().next());
+   }
+  
+}

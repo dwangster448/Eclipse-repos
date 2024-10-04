@@ -1,0 +1,127 @@
+import org.junit.jupiter.api.Test;
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.NoSuchElementException;
+import org.junit.jupiter.api.Assertions;
+
+public class BackendDeveloperTests {
+
+  /*
+   * Tests backend properly builds directed graph based on campus.dot
+   */
+  @Test
+  public void testReadData() {
+    Backend backend = new Backend();
+    try {
+      backend.readData("src/campus.dot");
+    } catch (IOException e) {
+      e.printStackTrace();
+      Assertions.fail();
+    }
+    
+    //Verify that the edges leaving Memorial Union matches the arithmetic count in the dot file
+    Assertions.assertFalse(!(backend.graph.nodes.get("Memorial Union").edgesLeaving.size() == 5));
+    
+    //Verify that all edges were built using Memorial Union as a test location
+    Assertions.assertFalse(!(backend.graph.containsEdge("Memorial Union", "Science Hall")));
+    
+    Assertions.assertFalse(!(backend.graph.containsEdge("Memorial Union", "Brat Stand")));
+    
+    Assertions.assertFalse(!(backend.graph.containsEdge("Memorial Union", "Helen C White Hall")));
+    
+    Assertions.assertFalse(!(backend.graph.containsEdge("Memorial Union", "Radio Hall")));
+    
+    Assertions.assertFalse(!(backend.graph.containsEdge("Memorial Union", 
+        "Wisconsin State Historical Society")));
+
+  }
+
+
+  /*
+   * Tests backend properly creates a shortestPath, will use simple three node path in DOT file
+   */
+  @Test
+  public void testShortestPath() {
+    Backend backend = new Backend();
+    try {
+      backend.readData("src/campus.dot");
+    } catch (IOException e) {
+      e.printStackTrace();
+      Assertions.fail();
+    }
+    List<String> expected = new LinkedList<String>();
+    expected.add("Memorial Union");
+    expected.add("Radio Hall");
+    expected.add("North Hall");
+    List<String> result = backend.findShortestPath("Memorial Union", "North Hall").getPath();
+    for (String node : result) {
+      if (!expected.contains(node)) {
+        Assertions.fail();
+      }
+    }
+  }
+
+  /*
+   * Expects NoSuchElementException upon reading a node that cannot reach intended destination
+   */
+  @Test
+  public void testInvalidShortestPath() {
+    Backend backend = new Backend();
+    //start node is null
+    try {
+      backend.readData("src/campus.dot");
+      backend.findShortestPath(null, "Plant Sciences");
+      Assertions.fail();
+    } catch (IOException e) {
+      e.printStackTrace();
+      Assertions.fail();
+    } catch (NoSuchElementException e) {
+      e.printStackTrace();
+    }
+    //dest node is null
+    try {
+      backend.readData("src/campus.dot");
+      backend.findShortestPath("Memorial Union", null);
+      Assertions.fail();
+    } catch (IOException e) {
+      e.printStackTrace();
+      Assertions.fail();
+    } catch (NoSuchElementException e) {
+      e.printStackTrace();
+      Assertions.assertTrue(true);
+    }
+  }
+
+  /*
+   * Tests backend properly produces a string of all data in graph
+   */
+  @Test
+  public void testDataSet() {
+    Backend backend = new Backend();
+    try {
+      backend.readData("src/campus.dot");
+      Assertions.assertTrue(backend.getGraphStats().contains("Memorial Hall"));
+    } catch (IOException e) {
+      e.printStackTrace();
+      Assertions.fail();
+    }
+
+  }
+
+  /*
+   * Expects that program returns NoSuchElementException upon
+   */
+  @Test
+  public void testInvalidFilePath() {
+    Backend backend = new Backend();
+    try {
+      backend.readData("src/campus.dot");
+    } catch (IOException e) {
+      e.printStackTrace();
+      Assertions.assertTrue(true);
+    }
+    Assertions.fail();
+  }
+
+}

@@ -1,0 +1,110 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.regex.*;
+import java.io.IOException;
+
+public class Backend implements BackendInterface {
+
+  protected DijkstraGraph<String, Double> graph;
+
+  private ShortestPath path;
+
+  public Backend() {
+    graph = new DijkstraGraph<>(new PlaceholderMap<>());
+  }
+
+  @Override
+  public boolean readData(String filePath) throws IOException {
+    String line;
+    // catch any expected exceptions during the reading of the file in backend
+    try (BufferedReader reader = new BufferedReader(new FileReader(filePath));) {
+      
+      // Skip title description
+      reader.readLine();
+      while ((line = reader.readLine()) != null) {
+        // Split the line into columns using a comma as the delimiter
+        String data = line;
+        
+        // Define the regular expression pattern
+        String regex = "\"([^\"]+)\"\\s*--\\s*\"([^\"]+)\"\\s*\\[seconds=([0-9.]+)\\];";
+        Pattern pattern = Pattern.compile(regex);
+        // Create a Matcher object 
+        Matcher matcher = pattern.matcher(data);
+        
+        //Use regex expression on current line
+        if (matcher.find()) {
+          String location1 = matcher.group(1);
+          String location2 = matcher.group(2);
+          double time = Double.parseDouble(matcher.group(3));
+    
+          //Initialize any nonexisting nodes and edges in graph
+          if (!graph.containsNode(location1)) {
+            graph.insertNode(location1);
+
+          }
+          if (!graph.containsNode(location2)) {
+            graph.insertNode(location2);
+
+          }
+          if (!graph.containsEdge(location1, location2)) {
+            graph.insertEdge(location1, location2, time);
+
+          }
+          if (!graph.containsEdge(location2, location1)) {
+            graph.insertEdge(location2, location1, time);
+
+          }
+        }
+      }
+      reader.close();
+      return true;
+    } catch (IOException e) {
+      throw new IOException("Invalid file path");
+    }
+  }
+
+  @Override
+  public ShortestPath findShortestPath(String start, String dest) throws NoSuchElementException {
+    if (start != null && dest != null && this.graph != null) {
+      if (!graph.containsNode(start)) {
+        throw new NoSuchElementException("Start node not in graph");
+      }
+      if (!graph.containsNode(dest)) {
+        throw new NoSuchElementException("Dest node not in graph");
+      }
+      path = new ShortestPath(start, dest, this.graph);
+      return path;
+    }
+    throw new NoSuchElementException("Cannot path null node(s)");
+  }
+
+
+  @Override
+  public String getGraphStats() {
+    DijkstraGraph<String, Double> visited = 
+        new DijkstraGraph<String, Double>(new PlaceholderMap<>());
+    while (visited.getNodeCount() < graph.getNodeCount() 
+        && visited.getEdgeCount() < graph.getEdgeCount()) {
+      graph.nodes;
+    }
+    return null;
+  }
+
+  public static void main(String[] args) throws IOException {
+    // create instance of frontend
+    Backend backend = new Backend();
+    backend.readData("src/campus.dot");
+    ShortestPath result = backend.findShortestPath("Memorial Union", "North Hall");
+    List<String> list = result.getPath();
+    for (String node : list) {
+      System.out.print(node + ", ");
+    }
+    List<Double> time = result.getWalkTimes();
+    for (double node : time) {
+      System.out.print(node + ", ");
+    }
+    System.out.println(backend.findShortestPath("Memorial Union", "Nitty Gritty").getPath().toString());
+  }
+}

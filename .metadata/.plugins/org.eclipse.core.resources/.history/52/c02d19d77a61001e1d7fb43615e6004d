@@ -1,0 +1,139 @@
+import org.junit.jupiter.api.Test;
+
+public class RedBlackTree<T extends Comparable<T>> extends BinarySearchTree<T> {
+
+
+  protected static class RBTNode<T extends Node<T>> {
+    public int blackHeight = 0;
+
+    public RBTNode(T data) {
+      super(data);
+    }
+
+    public RBTNode<T> getUp() {
+      return (RBTNode<T>) this.up;
+    }
+
+    public RBTNode<T> getDownLeft() {
+      return (RBTNode<T>) this.down[0];
+    }
+
+    public RBTNode<T> getDownRight() {
+      return (RBTNode<T>) this.down[1];
+    }
+  }
+
+  // Resolves RBT red violations
+  protected void enforceRBTreePropertiesAfterInsert(Node<T> newNode) {
+    if (newNode == null) {
+      return;
+    }
+
+    Node<T> parent = newNode.getParent();
+    if (parent == null) {
+      // Case 1: The new node is the root, and it is colored black.
+      newNode.setColor(Node.BLACK);
+    } else if (parent.getColor() == Node.BLACK) {
+      // Case 2: The parent is black, so no violations.
+      return;
+    } else {
+      Node<T> grandparent = parent.getParent();
+      Node<T> uncle = getUncle(newNode);
+
+      if (uncle != null && uncle.getColor() == Node.RED) {
+        // Case 3: Parent and uncle are red, so we need to recolor.
+        parent.setColor(Node.BLACK);
+        uncle.setColor(Node.BLACK);
+        grandparent.setColor(Node.RED);
+
+        // Continue enforcing properties with the grandparent.
+        enforceRBTreePropertiesAfterInsert(grandparent);
+      } else {
+        // Case 4: Parent is red, but uncle is black or null.
+        if (newNode == parent.getRight() && parent == grandparent.getLeft()) {
+          // Left rotation needed.
+          rotateLeft(parent);
+          newNode = newNode.getLeft();
+        } else if (newNode == parent.getLeft() && parent == grandparent.getRight()) {
+          // Right rotation needed.
+          rotateRight(parent);
+          newNode = newNode.getRight();
+        }
+
+        // Case 5: Recolor and rotate.
+        parent = newNode.getParent();
+        grandparent = parent.getParent();
+
+        parent.setColor(Node.BLACK);
+        grandparent.setColor(Node.RED);
+
+        if (newNode == parent.getLeft()) {
+          // Right rotation.
+          rotateRight(grandparent);
+        } else {
+          // Left rotation.
+          rotateLeft(grandparent);
+        }
+      }
+    }
+  }
+
+  // Helper method to get the uncle node
+  private Node<T> getUncle(Node<T> node) {
+    Node<T> parent = node.getParent();
+    Node<T> grandparent = parent != null ? parent.getParent() : null;
+
+    if (grandparent == null) {
+      return null;
+    }
+
+    if (parent == grandparent.getLeft()) {
+      return grandparent.getRight();
+    } else {
+      return grandparent.getLeft();
+    }
+  }
+
+  // Helper method to perform a left rotation
+  private void rotateLeft(Node<T> node) {
+    // Left rotation logic here
+  }
+
+  // Helper method to perform a right rotation
+  private void rotateRight(Node<T> node) {
+    // Right rotation logic here
+  }
+
+
+  @Override
+  public boolean insert(T data) throws NullPointerException {
+    if (data == null)
+      throw new NullPointerException("Cannot insert data value null into the tree.");
+    BinarySearchTree.Node<T> newNode = new Node<T>(data); // Create a new red node
+    insertHelper(newNode); // Insert the new node using the helper method
+    enforceRBTreePropertiesAfterInsert(newNode); // Enforce Red-Black Tree properties
+
+    // After enforcing properties, set the root node to black
+    if (newNode.getParent() == null) {
+      newNode.setColor(Node.BLACK);
+    }
+  }
+  
+  @Test
+  public void testInsertCase1() {
+      RedBlackTree<Integer> tree = new RedBlackTree<>();
+      tree.insert(10);
+      tree.insert(5);
+      tree.insert(15);
+
+      // Check that the root node is black
+      assertEquals(Node.BLACK, tree.getRoot().getColor());
+  }
+
+  public static void main(String[] args) {
+    // TODO Auto-generated method stub
+
+  }
+
+
+}

@@ -1,0 +1,81 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.NoSuchElementException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.io.IOException;
+
+public class Backend implements BackendInterface {
+
+  private DijkstraGraph<String, Integer> graph;
+
+  private ShortestPath path;
+
+  public Backend() {
+    graph = new DijkstraGraph<>(new PlaceholderMap<>());
+  }
+
+  @Override
+  public boolean readData(String filePath) throws IOException {
+    String line;
+    // catch any expected exceptions during the reading of the file in backend
+    try (BufferedReader reader = new BufferedReader(new FileReader(filePath));) {
+      // Define the regular expression pattern
+      String pattern = "\"([^\"]+)\"\\s*--\\s*\"([^\"]+)\"\\s*\\[seconds=([0-9.]+)\\];";
+      Pattern r = Pattern.compile(pattern);
+
+      // Skip title description
+      reader.readLine();
+      while ((line = reader.readLine()) != null) {
+        // Split the line into columns using a comma as the delimiter
+        String[] data = line.split(",");
+        // Create a Matcher object
+        Matcher m = r.matcher(data[0]);
+
+        String node1 = m.group(1);
+        String node2 = m.group(2);
+        Integer seconds = Integer.parseInt(m.group(3));
+
+        if (!graph.containsNode(node1)) {
+          graph.insertNode(node1);
+
+        }
+        if (!graph.containsNode(node2)) {
+          graph.insertNode(node2);
+
+        }
+        if (!graph.containsEdge(node1, node2)) {
+          graph.insertEdge(node1, node2, seconds);
+
+        }
+        if (!graph.containsEdge(node2, node1)) {
+          graph.insertEdge(node2, node1, seconds);
+
+        }
+
+      }
+      reader.close();
+      return true;
+    } catch (IOException e) {
+      throw new IOException("Invalid file path");
+    }
+  }
+
+  @Override
+  public ShortestPath findShortestPath(String start, String dest) throws NoSuchElementException {
+    if (start != null && dest != null) {
+      path = new ShortestPath(start, dest);
+      return path;
+    }
+    throw new NoSuchElementException("No path found from " + start + " to " + dest);
+  }
+
+
+
+  @Override
+  public String getGraphStats() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+}

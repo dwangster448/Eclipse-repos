@@ -1,0 +1,87 @@
+import java.util.*;
+
+public class GraphOrdering {
+  
+    public static void DFS(int vertices, Scanner scanner) {
+        int n = vertices; // Number of nodes in the graph
+
+        Map<String, List<String>> graph = new LinkedHashMap<>();
+
+        // Reading the graph
+        for (int j = 0; j < n; j++) {
+            String node = scanner.next();
+            int neighborsCount;
+            if (scanner.nextLine().length() > 0) {
+              neighborsCount = scanner.nextLine().split("").length;
+            } else {
+              neighborsCount = 0;
+            }
+
+            List<String> neighbors = new ArrayList<>();
+            for (int k = 0; k < neighborsCount; k++) {
+                neighbors.add(scanner.next());
+            }
+
+            graph.put(node, neighbors);
+        }
+
+        // Performing topological sorting based on tie-breaker priority
+        List<String> result = topologicalSort(graph);
+
+        // Printing the result
+        for (String node : result) {
+            System.out.print(node + " ");
+        }
+        System.out.println();
+    }
+  
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int t;
+        
+        int input = scanner.nextInt(); // Number of instances
+
+        if (scanner.hasNextInt()) {
+          t = input;
+          input = scanner.nextInt();
+          for (int i = 0; i < t; i++) {
+            DFS(input, scanner);
+          }
+        } else {
+          for (int j = 0; j < input; j++) {
+            DFS(input, scanner);
+          }
+        }
+        
+        scanner.close();
+    }
+
+    private static List<String> topologicalSort(Map<String, List<String>> graph) {
+        Set<String> visited = new HashSet<>();
+        List<String> result = new ArrayList<>();
+
+        for (String node : graph.keySet()) {
+            if (!visited.contains(node)) {
+                topologicalSortUtil(graph, node, visited, result);
+            }
+        }
+
+        Collections.reverse(result);
+        return result;
+    }
+
+    private static void topologicalSortUtil(Map<String, List<String>> graph, String node,
+                                            Set<String> visited, List<String> result) {
+        visited.add(node);
+
+        List<String> neighbors = graph.getOrDefault(node, Collections.emptyList());
+        for (String neighbor : neighbors) {
+            if (!visited.contains(neighbor)) {
+                topologicalSortUtil(graph, neighbor, visited, result);
+            }
+        }
+
+        result.add(node);
+    }
+}

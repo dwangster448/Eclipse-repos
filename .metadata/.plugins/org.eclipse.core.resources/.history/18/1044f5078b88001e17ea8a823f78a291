@@ -1,0 +1,97 @@
+import org.junit.jupiter.api.Test;
+import java.io.IOException;
+import java.util.NoSuchElementException;
+import org.junit.jupiter.api.Assertions;
+
+public class BackendDeveloperTests {
+
+  /*
+   * Tests backend properly builds directed graph based on campus.dot
+   */
+  @Test
+  public void testReadData() {
+    Backend backend = new Backend();
+    try {
+      backend.readData("campus.dot");
+    } catch (IOException e) {
+      e.printStackTrace();
+      Assertions.fail();
+    }
+    
+    //Test total node count to make sure all lines beyond title description were read
+    Assertions.assertFalse(!(backend.graph.nodes.get("Memorial Union").edgesLeaving.size() == 5));
+    
+    //Test edges to make sure all lines were properly read
+    Assertions.assertFalse(!(backend.graph.containsEdge("Memorial Union", "Science Hall")));
+    
+    Assertions.assertFalse(!(backend.graph.containsEdge("Memorial Union", "Science Hall")));
+
+  }
+
+
+  /*
+   * Tests backend properly creates a shortestPath
+   */
+  @Test
+  public void testShortestPath() {
+    Backend backend = new Backend();
+    try {
+      backend.readData("campus.dot");
+    } catch (IOException e) {
+      e.printStackTrace();
+      Assertions.fail();
+    }
+    Assertions.assertEquals(new ShortestPath("Memorial Union", "Science Hall"),backend.getGraphStats().contains(null));
+  }
+
+  /*
+   * Expects NoSuchElementException upon reading a node that cannot reach intended destination
+   */
+  @Test
+  public void testInvalidShortestPath() {
+    Backend backend = new Backend();
+    try {
+      backend.readData("campus.dot");
+      backend.findShortestPath("Memorial Union", "Plant Sciences");
+      Assertions.fail();
+    } catch (IOException e) {
+      e.printStackTrace();
+      Assertions.fail();
+    } catch (NoSuchElementException e) {
+      e.printStackTrace();
+      Assertions.assertTrue(true);
+    }
+  }
+
+  /*
+   * Tests backend properly produces a string of all data in graph
+   */
+  @Test
+  public void testDataSet() {
+    Backend backend = new Backend();
+    try {
+      backend.readData("campus.dot");
+      Assertions.assertTrue(backend.getGraphStats().contains("Memorial Hall"));
+    } catch (IOException e) {
+      e.printStackTrace();
+      Assertions.fail();
+    }
+
+  }
+
+  /*
+   * Expects that program returns NoSuchElementException upon
+   */
+  @Test
+  public void testInvalidFilePath() {
+    Backend backend = new Backend();
+    try {
+      backend.readData("");
+    } catch (IOException e) {
+      e.printStackTrace();
+      Assertions.assertTrue(true);
+    }
+    Assertions.fail();
+  }
+
+}

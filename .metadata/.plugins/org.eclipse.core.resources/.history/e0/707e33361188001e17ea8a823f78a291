@@ -1,0 +1,67 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.io.IOException;
+
+public class Backend implements BackendInterface {
+
+  private DijkstraGraph<String, Integer> graph;
+  
+  public Backend() {
+    graph = new DijkstraGraph<>(new PlaceholderMap<>());
+  }
+  
+  @Override
+  public boolean readData(String filePath) throws IOException {
+    String line;
+    // catch any expected exceptions during the reading of the file in backend
+    try (BufferedReader reader = new BufferedReader(new FileReader(filePath));) {
+      // Define the regular expression pattern
+      String pattern = "\"([^\"]+)\"\\s*--\\s*\"([^\"]+)\"\\s*\\[seconds=([\\d.]+)\\];";
+      Pattern r = Pattern.compile(pattern);
+      
+      //Skip title description
+      reader.readLine();
+      while ((line = reader.readLine()) != null) {
+        // Split the line into columns using a comma as the delimiter
+        String[] data = line.split(",");
+        // Create a Matcher object
+        Matcher m = r.matcher(data[0]);
+        
+        // Check if the pattern matches
+        if (m.matches()) {
+            // Retrieve matched groups
+            String node1 = m.group(1);
+            String node2 = m.group(2);
+            String seconds = m.group(3);
+
+            // Print the results for each match
+            System.out.println("Node 1: " + node1);
+            System.out.println("Node 2: " + node2);
+            System.out.println("Seconds: " + seconds);
+            System.out.println("---");
+        } else {
+            System.out.println("No match found for line: " + line);
+        }
+      }
+      reader.close();
+      return true;
+    } catch (IOException e) {
+      throw new IOException("Invalid file path");
+    }
+  }
+
+  @Override
+  public ShortestPath findShortestPath(String start, String dest) {
+    map = new ShortestPath 
+    return null;
+  }
+
+  @Override
+  public String getGraphStats() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  
+}

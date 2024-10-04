@@ -1,0 +1,32 @@
+import java.util.List;
+
+public class ShortestPath extends DijkstraGraph<String, String> implements ShortestPathInterface{
+
+  DijkstraGraph<String, Integer> graph;
+  
+  /*
+   * Construct a new instance of this class that implements Dijkstra's algorithm
+   */
+  public ShortestPath(String node, String string) {
+    DijkstraGraph<String, String> graph = new DijkstraGraph<>(new PlaceholderMap<>());
+  }
+  
+  @Override
+  public List<String> getPath() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public List<Double> getWalkTimes() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public double getTotalTime() {
+    // TODO Auto-generated method stub
+    return 0;
+  }
+
+}

@@ -1,0 +1,27 @@
+import java.util.List;
+
+/**
+ * The interface for the result of a shortest path search, responsible for finding all data
+ * based on getter commands. Send data to frontend instance.
+ */
+public interface ShortestPathInterface {
+
+  /**
+   * Gets the shortest path from starting building to ending building
+   */
+  List<String> getShortestPath();
+
+  /**
+   * Generates a list of all possible time it takes from each building to the next
+   */
+  List<Double> getTime(String start, String target);
+
+  /**
+   * Gets the shortest total time from the initial building to the ending building
+   * @param start the initial building in the shortest path
+   * @param target the ending building in the shortest path
+   * @return
+   */
+  double getShortestPathCost(String start, Building target);
+
+}

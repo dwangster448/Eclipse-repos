@@ -1,0 +1,25 @@
+import java.io.IOException;
+
+public class Backend implements BackendInterface {
+
+  private DijkstraGraph<Car> carsDatabase;
+  
+  @Override
+  public boolean readData(String filepath) throws IOException {
+    DijkstraGraph<String, Integer> graph = new DijkstraGraph<>(new PlaceholderMap<>());
+    return false;
+  }
+
+  @Override
+  public ShortestPath findShortestPath(String start, String dest) {
+    map = new ShortestPath 
+    return null;
+  }
+
+  @Override
+  public String getGraphStats() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  
+}

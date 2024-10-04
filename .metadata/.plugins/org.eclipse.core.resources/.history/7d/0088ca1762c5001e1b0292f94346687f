@@ -1,0 +1,64 @@
+import java.util.*;
+
+public class GraphTraversal {
+  
+    public static void readData(int vertices, Scanner scanner) {
+      
+    }
+  
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Read the number of test cases
+        int testCases = scanner.nextInt();
+        
+        if (scanner.hasNextInt()) {
+          
+        }
+
+        for (int t = 0; t < testCases; t++) {
+            // Read the number of nodes
+            int nodes = scanner.nextInt();
+
+            // Create an adjacency list to represent the graph
+            Map<Integer, List<Integer>> graph = new HashMap<>();
+            for (int i = 1; i <= nodes; i++) {
+                graph.put(i, new ArrayList<>());
+            }
+
+            // Read the connections and build the graph
+            for (int i = 1; i <= nodes; i++) {
+                while (scanner.hasNextInt()) {
+                    int neighbor = scanner.nextInt();
+                    graph.get(i).add(neighbor);
+                }
+            }
+
+            // Perform DFS and print the result
+            boolean[] visited = new boolean[nodes + 1];
+            List<Integer> result = new ArrayList<>();
+            for (int i = 1; i <= nodes; i++) {
+                if (!visited[i]) {
+                    dfs(i, graph, visited, result);
+                }
+            }
+
+            // Print the output
+            for (int i : result) {
+                System.out.print((char) ('A' + i - 1) + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    private static void dfs(int node, Map<Integer, List<Integer>> graph, boolean[] visited, List<Integer> result) {
+        visited[node] = true;
+        result.add(node);
+
+        for (int neighbor : graph.get(node)) {
+            if (!visited[neighbor]) {
+                dfs(neighbor, graph, visited, result);
+            }
+        }
+    }
+}

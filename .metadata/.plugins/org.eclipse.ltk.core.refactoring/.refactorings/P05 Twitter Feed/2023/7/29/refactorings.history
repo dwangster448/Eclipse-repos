@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Rename resource &apos;P05 Twitter Feed/src/ListADT-1.java&apos; to &apos;ListADT.java&apos;" description="Rename resource &apos;ListADT-1.java&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/ListADT-1.java" name="ListADT.java" stamp="1690059894464" updateReferences="true"/>&#x0A;&#x0A;</session>

@@ -1,0 +1,73 @@
+import java.util.*;
+
+
+public class hw2 {
+
+  public static class Node {
+    String data;
+    String[] neighbors;
+
+    public Node(String data) {
+      this.data = data;
+    }
+
+
+  }
+
+  static int input = 0;
+
+  public static <T> void readData(int amount, Scanner scanner) {
+    Map<Node, Integer> graph = new LinkedHashMap<>();
+    Map<String, Integer> output = new LinkedHashMap<>();
+    Queue<String> queue = new LinkedList<>();
+
+    String node;
+    for (int i = 0; i < amount; i++) {
+      node = scanner.next();
+      Node placeholder = new Node(node);
+      graph.put(placeholder, i);
+      if (scanner.nextLine().length() > 0) {
+        String line;
+        line = scanner.nextLine();
+        placeholder.neighbors = line.split("//s");
+        for (int j = 0; j < placeholder.neighbors.length; j++) {
+          queue.add(placeholder.neighbors[j].toString());
+        }
+      }
+    }
+    int counter = 1;
+    while (!(queue.isEmpty() & graph.isEmpty())) {
+      String check = queue.poll();
+      if (!output.containsValue(check)) {
+        
+      }
+    }
+  }
+
+  public static void main(String[] args) {
+    Scanner scanner = new Scanner(System.in);
+    input = scanner.nextInt();
+
+    if (scanner.hasNextInt()) {
+      int nodes = input;
+      input = scanner.nextInt();
+      for (int i = 0; i < input; i++) {
+        readData(input, scanner);
+      }
+    } else {
+      for (int j = 0; j < input; j++) {
+        String line = scanner.nextLine();
+      }
+    }
+  
+    scanner.close();
+
+    String output = "";
+
+    for (String node : graph.keySet()) {
+      output += (node + " ");
+    }
+    System.out.println(output);
+  }
+
+}

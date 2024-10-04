@@ -1,0 +1,84 @@
+import org.junit.jupiter.api.Test;
+import java.io.IOException;
+import org.junit.jupiter.api.Assertions;
+
+public class BackendDeveloperTests {
+  
+  /*
+   * Tests backend properly builds directed graph based on campus.dot
+   */
+  @Test
+  public void testReadData() {
+    Backend backend = new Backend();
+    try {
+      backend.readData("campus.dot");
+    } catch (IOException e) {
+      e.printStackTrace();
+      Assertions.fail();
+    }
+    Assertions.assertTrue(backend.getGraphStats().contains(null));
+  }
+
+  
+  /*
+   * Tests backend properly creates a shortestPath
+   */
+  @Test
+  public void testShortestPath() {
+    Backend backend = new Backend();
+    try {
+      backend.readData("campus.dot");
+    } catch (IOException e) {
+      e.printStackTrace();
+      Assertions.fail();
+    }
+    Assertions.assertTrue(backend.getGraphStats().contains(null));
+  }
+  
+  /*
+   * Tests backend properly produces a string of all data in graph
+   */
+  @Test
+  public void testInvalidShortestPath() {
+    Backend backend = new Backend();
+    try {
+      backend.readData("campus.dot");
+    } catch (IOException e) {
+      e.printStackTrace();
+      Assertions.fail();
+    }
+    Assertions.assertTrue(backend.getGraphStats().contains(null));
+  }
+  
+  /*
+   * Tests backend properly produces a string of all data in graph
+   */
+  @Test
+  public void testDataSet() {
+    Backend backend = new Backend();
+    try {
+      backend.readData("campus.dot");
+      Assertions.assertTrue(backend.getGraphStats().contains("Memorial Hall"));
+    } catch (IOException e) {
+      e.printStackTrace();
+      Assertions.fail();
+    }
+    
+  }
+  
+  /*
+   * Expects that program returns NoSuchElementException upon 
+   */
+  @Test
+  public void testInvalidFilePath() {
+    Backend backend = new Backend();
+    try {
+      backend.readData("");
+    } catch (IOException e) {
+      e.printStackTrace();
+      Assertions.assertTrue(true);
+    }  
+    Assertions.fail();
+  }
+  
+}

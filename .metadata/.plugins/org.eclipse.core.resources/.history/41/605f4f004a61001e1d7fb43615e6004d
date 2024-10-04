@@ -1,0 +1,27 @@
+public class RedBlackTree<T extends Comparable<T>> {
+
+  
+  protected static class RBTNode<T extends Node<T>> {
+    public int blackHeight = 0;
+    public RBTNode(T data) { super(data); }
+    public RBTNode<T> getUp() { return (RBTNode<T>)this.up; }
+    public RBTNode<T> getDownLeft() { return (RBTNode<T>)this.down[0]; }
+    public RBTNode<T> getDownRight() { return (RBTNode<T>)this.down[1]; }
+  }
+  
+  //Resolves RBT red violations 
+  public boolean enforceRBTreePropertiesAfterInsert(RBTNode node) {
+    return false;
+  }
+  
+  @Override
+  public boolean insert(T data) throws NullPointerException {
+    return false;
+  }
+  
+  public static void main(String[] args) {
+    // TODO Auto-generated method stub
+
+  }
+
+}

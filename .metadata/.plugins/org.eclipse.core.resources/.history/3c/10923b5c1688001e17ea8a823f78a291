@@ -1,0 +1,22 @@
+import org.junit.jupiter.api.Test;
+import java.io.IOException;
+import org.junit.jupiter.api.Assertions;
+
+public class BackendDeveloperTests {
+  
+  /*
+   * Tests backend properly builds directed graph based on campus.dot
+   */
+  @Test
+  public void testReadData() {
+    Backend backend = new Backend();
+    try {
+      backend.readData("campus.dot");
+    } catch (IOException e) {
+      e.printStackTrace();
+      Assertions.fail();
+    }
+    Assertions.assertTrue(backend.getGraphStats().contains(null));
+  }
+
+}

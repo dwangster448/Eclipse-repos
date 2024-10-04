@@ -1,0 +1,19 @@
+import BinarySearchTree.Node;
+
+public class ChatDump {
+//Helper method to get the uncle node
+ private Node<T> getUncle(Node<T> node) {
+   Node<T> parent = node.getParent();
+   Node<T> grandparent = parent != null ? parent.getParent() : null;
+
+   if (grandparent == null) {
+     return null;
+   }
+
+   if (parent == grandparent.getLeft()) {
+     return grandparent.getRight();
+   } else {
+     return grandparent.getLeft();
+   }
+ }
+}

@@ -1,0 +1,48 @@
+public class RedBlackTree<T extends BinarySearchTree> {
+
+  
+  protected static class RBTNode<T extends Node<T>> {
+    public int blackHeight = 0;
+    public RBTNode(T data) { super(data); }
+    public RBTNode<T> getUp() { return (RBTNode<T>)this.up; }
+    public RBTNode<T> getDownLeft() { return (RBTNode<T>)this.down[0]; }
+    public RBTNode<T> getDownRight() { 
+      return (RBTNode<T>)this.down[1]; }
+  }
+  
+  //Resolves RBT red violations 
+  protected boolean enforceRBTreePropertiesAfterInsert(RBTNode node) {
+    if 
+    return false;
+  }
+  
+  public boolean insert(RBTNode node) throws NullPointerException {
+    return false;
+  }
+  
+  public static boolean test1() {
+    //Create, insert Integers into empty tree
+    
+    BinarySearchTree<Integer> tester = new BinarySearchTree<Integer>(); 
+    tester.insert(10);
+    tester.insert(9);
+    tester.insert(8);
+    Node<Integer> ten = tester.root;
+    Node<Integer> nine = ten.down[0];
+    //call rotate method
+    tester.rotate(nine, ten);
+    //Test expected to actual
+    if (!tester.toLevelOrderString().equals("[ 9, 8, 10 ]")) {
+      System.out.println("After inserting 10, 9, 8 into an empty tree and rotating 9 and 10,"
+          + " level order is not [ 9, 8, 10 ], but should be");
+      return false;
+    }
+    return true;
+}
+  
+  public static void main(String[] args) {
+    // TODO Auto-generated method stub
+
+  }
+
+}

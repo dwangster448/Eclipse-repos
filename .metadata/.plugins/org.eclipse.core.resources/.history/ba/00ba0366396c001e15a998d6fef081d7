@@ -1,0 +1,66 @@
+import java.util.Iterator;
+import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+
+public class IterableMultiKeyRBT <T extends Comparable<T>> extends RedBlackTree<KeyListInterface<T>> implements IterableMultiKeySortedCollectionInterface<T> {
+
+  public KeyList<T> startPoint;
+  
+  public int numKey;
+  /**
+   * Inserts value into tree that can store multiple objects per key by keeping
+   * lists of objects in each node of the tree.
+   * @param key object to insert
+   * @return true if a new node was inserted, false if the key was added into an existing node
+   */
+  @Override
+  public boolean insertSingleKey(T key) {
+    KeyList<T> newKey = new KeyList<T>(key);
+    if (startPoint == null) {
+      startPoint = newKey;
+    }
+    else if (KeyList.containsKey(newKey))
+    return false;
+  }
+
+  /**
+   * @return the number of values in the tree.
+   */
+  @Override
+  public int numKeys() {
+    return this.numKey;
+  }
+
+  /**
+   * Returns an iterator that does an in-order iteration over the tree.
+   */
+  @Override
+  public Iterator<T> iterator() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  /**
+   * Sets the starting point for iterations. Future iterations will start at the
+   * starting point or the key closest to it in the tree. This setting is remembered
+   * until it is reset. Passing in null disables the starting point.
+   * @param startPoint the start point to set for iterations
+   */
+  @Override
+  public void setIterationStartPoint(Comparable<T> startPoint) {
+    this.startPoint = startPoint;
+  }
+  
+  @Override
+  public void clear() {
+    super.clear();
+    numKey = 0;
+  }
+  
+  @Test
+  public void testInitialTraversal() {
+    
+    Assertions.assertTrue("", null);
+  }
+  
+}
